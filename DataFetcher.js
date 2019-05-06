@@ -3,11 +3,17 @@
  * @Author: cw
  * @LastEditors: cw
  * @Date: 2019-03-29 09:27:19
- * @LastEditTime: 2019-04-18 15:12:21
+ * @LastEditTime: 2019-05-06 17:00:27
  */
 let moment = require('moment');
 let request = require('request');
+let crypto = require('crypto');
 const STR_FORMAT = require('string-format');
+
+function cryptMd5(sData) {
+    var md5 = crypto.createHash('md5');
+    return md5.update(sData).digest('hex');
+}
 
 (function(window) {
     function DoRequest(tOptions){
@@ -30,6 +36,7 @@ const STR_FORMAT = require('string-format');
                     }
                 });
             }
+        }).catch((error) => {
         });
     }
 
@@ -421,6 +428,61 @@ const STR_FORMAT = require('string-format');
         return tDayData
     }
     
+    function ProcessMintegralData(sBody){
+        let tBody = JSON.parse(sBody);
+        if(!tBody){
+            return;
+        }
+        let tDataList = tBody.data;
+        if(!tDataList){
+            return;
+        }
+        let tMap = [];
+        for(let tData of tDataList.lists){
+            let tConvertedData = {}
+            tConvertedData["APP_ID"] = tData["app_id"];
+            tConvertedData["APP_NAME"] = tData["app_name"];
+            tConvertedData["COUNTRY"] = tData["country"];
+            tConvertedData["AD_UNIT"] = tData["unit_id"]
+            tConvertedData["PLATFORM"] = tData["platform"];
+            tConvertedData["REVENUE"] = tData["est_revenue"];
+            tConvertedData["REQUEST"] = tData["request"];
+            tConvertedData["AVALABLE"] = tData["filled"];
+            tConvertedData["VIEWS"] = tData["impression"];
+            tConvertedData["COMPLETES"] = tData["completes"];
+            tConvertedData["CLICKED"] = tData["click"];
+            tConvertedData["ECPM"] = tData["ecpm"];
+            tConvertedData["DATE"] = tData["date"];
+            tMap.push(tConvertedData);
+        }
+        let tDayData = {}
+        for(let tRowData of tMap){
+            let sAppID = tRowData.APP_ID
+            let sCountry = tRowData.COUNTRY
+            let sAdUnit = tRowData.AD_UNIT
+            if(!tDayData[sAppID]){
+                tDayData[sAppID] = {}
+            }
+            if(!tDayData[sAppID]){
+                tDayData[sAppID] = {}
+            }
+            if(!tDayData[sAppID][sCountry]){
+                tDayData[sAppID][sCountry] = {}
+            }
+            if(!tDayData[sAppID][sCountry][sAdUnit]){
+                tDayData[sAppID][sCountry][sAdUnit]={REQUEST:0,AVALABLE:0,VIEWS:0,REVENUE:0,CLICKED:0,COMPLETES:0}
+            }
+            let tAdUnitData = tDayData[sAppID][sCountry][sAdUnit];
+            tAdUnitData.REQUEST+=parseInt(tRowData.REQUEST);
+            tAdUnitData.AVALABLE+=parseInt(tRowData.AVALABLE);
+            tAdUnitData.COMPLETES+=parseInt(tRowData.COMPLETES);
+            tAdUnitData.CLICKED+=parseInt(tRowData.CLICKED);
+            tAdUnitData.VIEWS+=parseInt(tRowData.VIEWS);
+            tAdUnitData.REVENUE+=parseFloat(tRowData.REVENUE);    
+        }
+        return tDayData
+    }
+
     async function RequestUnityData(sDate,sKey,pCallback){
         let sURL="https://gameads-admin.applifier.com/stats/monetization-api?apikey={}&splitBy=country,zone&fields=adrequests,available,views,started,revenue,platform&start={}T00:00:00.000Z&end={}T00:00:00.000Z&scale=day"
         let sNextDayTime = moment(sDate).add(1,"days").format("YYYY-MM-DD");
@@ -523,6 +585,10 @@ const STR_FORMAT = require('string-format');
                 }
             }
             let rep = await DoRequest(tOptions);
+            if(!rep||!rep.body){
+                pCallback()
+                return;
+            }
             let tData = JSON.parse(rep.body);
             if(tData){
                 let tQueryResultOptions={
@@ -555,6 +621,28 @@ const STR_FORMAT = require('string-format');
         doQueryAll();
     }
 
+    async function RequestMintegralData(sDate,sKey,sSecret,pCallback){
+        let sURL = "http://oauth2.mobvista.com/m/report/offline_api_report?"
+        let nTime = moment().format("X")
+        let sQueryDate = moment(sDate,"YYYY-MM-DD").format("YYYYMMDD");
+        let sParams = `skey=${sKey}&time=${nTime}&start=${sQueryDate}&end=${sQueryDate}&v=1.0&group_by=`+encodeURIComponent("date,app_id,unit_id,country,platform");
+        let sSortedParms = sParams.split("&").sort().join("&");
+        let sSign = cryptMd5(cryptMd5(sSortedParms)+sSecret);
+        sURL+=sParams+"&sign="+sSign;
+        let tMintegralOptions = 
+        {
+            url:sURL, 
+            method: 'GET', 
+            headers: { 
+                'Content-Type': 'x-www-form-urlencoded;charset=utf-8',
+                'Accept':'application/json',
+            }
+        };
+        let rep = await DoRequest(tMintegralOptions);
+        let tMintegralData = ProcessMintegralData(rep.body)
+        pCallback(tMintegralData);
+    }
+
 if (typeof exports !== "undefined") {
     exports.RequestUnityData = RequestUnityData;
     exports.RequestVungleData  = RequestVungleData;
@@ -562,6 +650,7 @@ if (typeof exports !== "undefined") {
     exports.RequestMopubData = RequestMopubData;
     exports.RequestAdmobData=RequestAdmobData;
     exports.RequestFacebookData=RequestFacebookData;
+    exports.RequestMintegralData=RequestMintegralData;
 }
 else {
     window.RequestUnityData = RequestUnityData;
@@ -570,6 +659,7 @@ else {
     window.RequestMopubData=RequestMopubData;
     window.RequestAdmobData=RequestAdmobData;
     window.RequestFacebookData=RequestFacebookData;
+    window.RequestMintegralData=RequestMintegralData;
 
     if (typeof define === "function" && define.amd) {
         define(function() {
@@ -579,7 +669,8 @@ else {
                 RequestApplovinData:RequestApplovinData,
                 RequestMopubData:RequestMopubData,
                 RequestAdmobData:RequestAdmobData,
-                RequestFacebookData:RequestFacebookData
+                RequestFacebookData:RequestFacebookData,
+                RequestMintegralData:RequestMintegralData
             }
         })
     }
