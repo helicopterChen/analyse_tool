@@ -14,7 +14,7 @@
     let APPLOVIN_PATH = "https://r.applovin.com/report?api_key=MyQm4xO_Tc-ah_8aFQzVTSE41S26TF6qCWaGR-G_bEaHEktU8r-bIDgJfiP8zWz91XQTWgS6v2O8mFcu5aUNp9&start=2019-04-01&end=2019-04-01&columns=day,platform,country,application,package_name,size,ad_type,impressions,clicks,ecpm,revenue,device_type&format=json"
     let FACEBOOK_PATH = "https://graph.facebook.com/v3.2/2011906995737724/adnetworkanalytics/?metrics=['fb_ad_network_imp','fb_ad_network_filled_request','fb_ad_network_cpm','fb_ad_network_request','fb_ad_network_click','fb_ad_network_revenue']&since=2019-03-26&until=2019-03-26&breakdowns=['platform','country','placement']&access_token="+FB_TOKEN;
     let FACEBOOK_RESULT_QUERY = "https://graph.facebook.com/v3.2/2011906995737724/adnetworkanalytics_results/?query_ids=['"
-    let ADMOB_PATH="http://kkk.cwpro.xyz/details";
+    let ADMOB_PATH="http://xxx.cwpro.xyz/details";
 
     function unicode2Chr(str) {
         return unescape(str.replace(/\\/g, "%"))
