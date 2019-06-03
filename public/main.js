@@ -27,12 +27,12 @@ let T_WEEK_DAY=
 }
 let T_NATION=
 [
-    "TW","HK","CN","US","GB","JP","SG","AU","CA","MY","PH","ID","TH" 
+    "TW","HK","CN","US","GB","JP","SG","AU","CA","MY","PH","ID","TH","IN"
 ]
 
 let T_NATION_NAME =
 {
-    TW:"台湾",HK:"香港",CN:"大陆",US:"美国",GB:"英国",JP:"日本",SG:"新加坡",AU:"澳大利亚",CA:"加拿大",MY:"马来西亚",PH:"菲律宾",ID:"印尼",TH:"泰国"    
+    TW:"台湾",HK:"香港",CN:"大陆",US:"美国",GB:"英国",JP:"日本",SG:"新加坡",AU:"澳大利亚",CA:"加拿大",MY:"马来西亚",PH:"菲律宾",ID:"印尼",TH:"泰国",IN:"印度"   
 }
 
 let T_COL_ATTRI_NAME ={
