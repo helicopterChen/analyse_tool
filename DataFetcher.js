@@ -216,7 +216,7 @@ function cryptMd5(sData) {
     }
     
     async function RequestFacebookData(sDate,sToken,sID,pCallback){
-        let nLimit = 20000;
+        let nLimit = 1000;
         let doQueryAll=async()=>{
             let sURL = "https://graph.facebook.com/v3.2/{}/adnetworkanalytics/?metrics=['fb_ad_network_imp','fb_ad_network_filled_request','fb_ad_network_ctr','fb_ad_network_request','fb_ad_network_click','fb_ad_network_revenue']&since={}&until={}&breakdowns=['platform','country','placement']&access_token={}&limit={}"
             let URL_STR = STR_FORMAT(sURL,sID,sDate,sDate,sToken,nLimit);
@@ -248,7 +248,8 @@ function cryptMd5(sData) {
                     setTimeout( async()=>{ 
                         let result = await DoRequest(tQueryResultOptions)
                         let tBody = JSON.parse(result.body);
-                        if(tBody.data[0].status != "complete"){
+                        console.log(tBody)
+                        if(tBody.data && tBody.data[0].status != "complete"){
                             if(tBody.data[0].status == "invalid" || tBody.data[0].status == "requested" ){
                                 nLimit-=100;
                                 doQueryAll();
