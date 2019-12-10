@@ -9,7 +9,7 @@ let moment = require('moment');
 let fs = require('fs');
 let DataFetcher = require('./DataFetcher.js');
 const STR_FORMAT = require('string-format');
-let tNetworks = ["UnityAds","Vungle","Mopub","Applovin","Admob","Facebook"];
+let tNetworks = ["Admob","Facebook"];
 function DataMgr() {
     this._T_CONF={};
     this._tFetchOkTable={};
@@ -109,51 +109,11 @@ DataMgr.prototype.DoCheckAndFetech=function(){
             fs.mkdirSync("./saved_data/"+sDate);
         }
         setTimeout(() => {
-            self.DoCheckAndFetchUnity(sDate);
-            self.DoCheckAndFetchVungle(sDate);
-            self.DoCheckAndFetchApplovin(sDate);
-            self.DoCheckAndFetchMopub(sDate);
             self.DoCheckAndFetchAdmob(sDate);
             self.DoCheckAndFetchFacebook(sDate);
         },3500*i);
     }   
 };
-
-DataMgr.prototype.DoCheckAndFetchUnity=function(sDate){
-    let sFileName = "./saved_data/"+ sDate + "/UnityAds.json";
-    if(!fs.existsSync(sFileName)){
-        DataFetcher.RequestUnityData(sDate,this._T_CONF.Keys.UnityAds,(tData)=>{
-            this.SaveDataToFile(sFileName,tData,sDate);
-        });   
-    }
-}
-
-DataMgr.prototype.DoCheckAndFetchVungle=function(sDate){
-    let sFileName = "./saved_data/"+ sDate + "/Vungle.json";
-    if(!fs.existsSync(sFileName)){
-        DataFetcher.RequestVungleData(sDate,this._T_CONF.Keys.Vungle,(tData)=>{
-            this.SaveDataToFile(sFileName,tData,sDate);
-        });   
-    }
-}
-
-DataMgr.prototype.DoCheckAndFetchApplovin=function(sDate){
-    let sFileName = "./saved_data/"+ sDate + "/Applovin.json";
-    if(!fs.existsSync(sFileName)){
-        DataFetcher.RequestApplovinData(sDate,this._T_CONF.Keys.Applovin,(tData)=>{
-            this.SaveDataToFile(sFileName,tData,sDate);
-        });   
-    }
-}
-
-DataMgr.prototype.DoCheckAndFetchMopub=function(sDate){
-    let sFileName = "./saved_data/"+ sDate + "/Mopub.json";
-    if(!fs.existsSync(sFileName)){
-        DataFetcher.RequestMopubData(sDate,this._T_CONF.Keys.MopubReportKey,this._T_CONF.Keys.MopubApiKey,(tData)=>{
-            this.SaveDataToFile(sFileName,tData,sDate);
-        });   
-    }
-}
 
 DataMgr.prototype.DoCheckAndFetchAdmob=function(sDate){
     let sFileName = "./saved_data/"+ sDate + "/Admob.json";
@@ -282,10 +242,6 @@ DataMgr.prototype.refetchSevenDay = function(){
             fs.mkdirSync("./saved_data/"+sDate);
         }
         setTimeout(() => {
-            self.DoCheckAndFetchUnity(sDate);
-            self.DoCheckAndFetchVungle(sDate);
-            self.DoCheckAndFetchApplovin(sDate);
-            self.DoCheckAndFetchMopub(sDate);
             self.DoCheckAndFetchAdmob(sDate);
             self.DoCheckAndFetchFacebook(sDate);
         },3500*i);

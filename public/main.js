@@ -40,7 +40,7 @@ let T_COL_ATTRI_NAME ={
 }
 
 let T_NETWORKS=[
-    "UnityAds","Vungle","Admob","Facebook","Applovin","Mopub"
+    "Admob","Facebook"
 ]
 
 $('#networkTabs').w2tabs({
@@ -48,12 +48,7 @@ $('#networkTabs').w2tabs({
     active     : 'tab1',
     tabs    : [
         { id: 'Admob', caption: 'Admob', style: 'border: 1px solid gray' },        
-        { id: 'UnityAds', caption: 'UnityAds', style: 'border: 1px solid gray' },
-        { id: 'Applovin', caption: 'Applovin', style: 'border: 1px solid gray' },
         { id: 'Facebook', caption: 'Facebook', style: 'border: 1px solid gray' },
-        { id: 'Vungle', caption: 'Vungle', style: 'border: 1px solid gray' },
-        { id: 'Mopub', caption: 'Mopub', style: 'border: 1px solid gray' },
-        { id: 'Ironsource', caption: 'Ironsource', style: 'border: 1px solid gray' },
     ],
     onClick: function (event) {
         var tTabs = w2ui["networkTabs"].tabs;
@@ -76,12 +71,7 @@ $('#netTabs').w2tabs({
     active     : 'Admob',
     tabs    : [
         { id: 'Admob', caption: 'Admob', style: 'border: 1px solid gray' },        
-        { id: 'UnityAds', caption: 'UnityAds', style: 'border: 1px solid gray' },
-        { id: 'Vungle', caption: 'Vungle', style: 'border: 1px solid gray' },
-        { id: 'Applovin', caption: 'Applovin', style: 'border: 1px solid gray' },
         { id: 'Facebook', caption: 'Facebook', style: 'border: 1px solid gray' },
-        { id: 'Mopub', caption: 'Mopub', style: 'border: 1px solid gray' },
-        { id: 'Ironsource', caption: 'Ironsource', style: 'border: 1px solid gray' },
     ],
     onClick: function (event) {
         var tTabs = w2ui["netTabs"].tabs;
@@ -482,40 +472,6 @@ function DoDataFilterAndFillToRevenueGrid(){
         { field: 'IOS_Admob_View', caption: 'I_A匹', size: '60px', sortable: true, resizable: true  },
         { field: 'IOS_Admob_Ratio', caption: 'I_A率', size: '60px', sortable: true, resizable: true, style:'border: 3px solid #FF9999;border-bottom-style: none;border-top-style: none;border-left-style: none;'  },
         
-        { field: 'Android_UnityAds_Rev', caption: 'A_U收', size: '60px', sortable: true, resizable: true  },
-        { field: 'Android_UnityAds_ECPM', caption: 'A_Ucpm', size: '70px', sortable: true, resizable: true  },
-        { field: 'Android_UnityAds_Start', caption: 'A_U始', size: '60px', sortable: true, resizable: true  },
-        { field: 'Android_UnityAds_View', caption: 'A_U看', size: '60px', sortable: true, resizable: true  },
-        
-        { field: 'IOS_UnityAds_Rev', caption: 'I_U收', size: '60px', sortable: true, resizable: true, style:'border: 2px solid #000000;border-bottom-style: none;border-top-style: none;border-right-style: none;' },
-        { field: 'IOS_UnityAds_ECPM', caption: 'I_Ucpm', size: '70px', sortable: true, resizable: true  },
-        { field: 'IOS_UnityAds_Start', caption: 'I_U始', size: '60px', sortable: true, resizable: true  },
-        { field: 'IOS_UnityAds_View', caption: 'I_U看', size: '60px', sortable: true, resizable: true, style:'border: 3px solid #000000;border-bottom-style: none;border-top-style: none;border-left-style: none;'   },
-
-        { field: 'Android_Vungle_Rev', caption: 'A_V收', size: '60px', sortable: true, resizable: true  },
-        { field: 'Android_Vungle_ECPM', caption: 'A_Vcpm', size: '70px', sortable: true, resizable: true  },
-        { field: 'Android_Vungle_Start', caption: 'A_V展', size: '60px', sortable: true, resizable: true  },
-        { field: 'Android_Vungle_View', caption: 'A_V完', size: '60px', sortable: true, resizable: true  },
-        { field: 'Android_Vungle_Ratio', caption: 'A_V率', size: '60px', sortable: true, resizable: true},
-
-        { field: 'IOS_Vungle_Rev', caption: 'I_V收', size: '60px', sortable: true, resizable: true, style:'border: 2px solid #14CDC8;border-bottom-style: none;border-top-style: none;border-right-style: none;'  },
-        { field: 'IOS_Vungle_ECPM', caption: 'I_Vcpm', size: '70px', sortable: true, resizable: true  },
-        { field: 'IOS_Vungle_Start', caption: 'I_V展', size: '60px', sortable: true, resizable: true  },
-        { field: 'IOS_Vungle_View', caption: 'I_V完', size: '60px', sortable: true, resizable: true  },
-        { field: 'IOS_Vungle_Ratio', caption: 'I_V率', size: '60px', sortable: true, resizable: true, style:'border: 3px solid #14CDC8;border-bottom-style: none;border-top-style: none;border-left-style: none;' },
-
-        { field: 'Android_Applovin_Rev', caption: 'A_A收', size: '60px', sortable: true, resizable: true  },
-        { field: 'Android_Applovin_ECPM', caption: 'A_Acpm', size: '70px', sortable: true, resizable: true  },
-        { field: 'Android_Applovin_View', caption: 'A_A展', size: '60px', sortable: true, resizable: true  },
-        { field: 'Android_Applovin_Clicked', caption: 'A_A点', size: '60px', sortable: true, resizable: true  },
-        { field: 'Android_Applovin_Ratio', caption: 'A_A率', size: '60px', sortable: true, resizable: true  },
-
-        { field: 'IOS_Applovin_Rev', caption: 'I_A收', size: '60px', sortable: true, resizable: true, style:'border: 2px solid #2084A8;border-bottom-style: none;border-top-style: none;border-right-style: none;'    },
-        { field: 'IOS_Applovin_ECPM', caption: 'I_Acpm', size: '70px', sortable: true, resizable: true  },
-        { field: 'IOS_Applovin_View', caption: 'I_A展', size: '60px', sortable: true, resizable: true  },
-        { field: 'IOS_Applovin_Clicked', caption: 'I_A点', size: '60px', sortable: true, resizable: true  },
-        { field: 'IOS_Applovin_Ratio', caption: 'I_A率', size: '60px', sortable: true, resizable: true, style:'border: 3px solid #2084A8;border-bottom-style: none;border-top-style: none;border-left-style: none;'   },
-
         { field: 'Android_Facebook_Rev', caption: 'A_F收', size: '60px', sortable: true, resizable: true  },
         { field: 'Android_Facebook_ECPM', caption: 'A_Fcpm', size: '70px', sortable: true, resizable: true  },
         { field: 'Android_Facebook_Request', caption: 'A_F请', size: '60px', sortable: true, resizable: true  },
@@ -541,12 +497,6 @@ function DoDataFilterAndFillToRevenueGrid(){
         { field: 'Android_Mopub_View', caption: 'A_M展', size: '60px', sortable: true, resizable: true  },
         { field: 'Android_Mopub_Clicked', caption: 'A_M点', size: '60px', sortable: true, resizable: true  },
         { field: 'Android_Mopub_Ratio', caption: 'A_M率', size: '60px', sortable: true, resizable: true  },
-
-        { field: 'IOS_Mopub_Rev', caption: 'I_M收', size: '60px', sortable: true, resizable: true, style:'border: 2px solid #794BC4;border-bottom-style: none;border-top-style: none;border-right-style: none;'   },
-        { field: 'IOS_Mopub_ECPM', caption: 'I_Mcpm', size: '70px', sortable: true, resizable: true  },
-        { field: 'IOS_Mopub_View', caption: 'I_M展', size: '60px', sortable: true, resizable: true  },
-        { field: 'IOS_Mopub_Clicked', caption: 'I_M点', size: '60px', sortable: true, resizable: true  },
-        { field: 'IOS_Mopub_Ratio', caption: 'I_M率', size: '60px', sortable: true, resizable: true, style:'border: 3px solid #794BC4;border-bottom-style: none;border-top-style: none;border-left-style: none;'     },
     ];
     for(let sDate in tLast30DaysAllData){
         let tDateData = tLast30DaysAllData[sDate];
@@ -584,77 +534,7 @@ function DoDataFilterAndFillToRevenueGrid(){
             }else{
                 tLineData.IOS_Admob_Ratio="----";
             }
-            
-            let tUnityAdsDateData = GetDateAdsTypeData("UnityAds",tDateData);
-            tLineData.Android_UnityAds_ECPM = 0
-            if(tUnityAdsDateData.Android.VIEWS >0 ){
-                tLineData.Android_UnityAds_ECPM =((tUnityAdsDateData.Android.REVENUE/tUnityAdsDateData.Android.VIEWS)*1000).toFixed(2);
-            }
-            tLineData.Android_UnityAds_Rev = parseFloat((tUnityAdsDateData.Android.REVENUE).toFixed(2));
-            tLineData.Android_UnityAds_Start = tUnityAdsDateData.Android.VIEWS;
-            tLineData.Android_UnityAds_View = tUnityAdsDateData.Android.COMPLETES;
-            tLineData.IOS_UnityAds_ECPM = 0;
-            if(tUnityAdsDateData.IOS.VIEWS >0 ){
-                tLineData.IOS_UnityAds_ECPM = parseFloat(((tUnityAdsDateData.IOS.REVENUE/tUnityAdsDateData.IOS.VIEWS)*1000).toFixed(2));
-            }
-            tLineData.IOS_UnityAds_Rev = parseFloat((tUnityAdsDateData.IOS.REVENUE).toFixed(2));
-            tLineData.IOS_UnityAds_Start = tUnityAdsDateData.IOS.VIEWS;
-            tLineData.IOS_UnityAds_View = tUnityAdsDateData.IOS.COMPLETES;
-            
-            let tVungleDateData = GetDateAdsTypeData("Vungle",tDateData);
-            tLineData.Android_Vungle_ECPM = 0
-            if(tVungleDateData.Android.VIEWS >0 ){
-                tLineData.Android_Vungle_ECPM =((tVungleDateData.Android.REVENUE/tVungleDateData.Android.VIEWS)*1000).toFixed(2);
-            }
-            tLineData.Android_Vungle_Rev = parseFloat((tVungleDateData.Android.REVENUE).toFixed(2));
-            tLineData.Android_Vungle_Start = tVungleDateData.Android.VIEWS;
-            tLineData.Android_Vungle_View = tVungleDateData.Android.COMPLETES;
-            if(tVungleDateData.Android.VIEWS>0){
-                tLineData.Android_Vungle_Ratio=((tVungleDateData.Android.COMPLETES/tVungleDateData.Android.VIEWS)*100).toFixed(2)+"%";
-            }else{
-                tLineData.Android_Vungle_Ratio="----";
-            }
-
-            tLineData.IOS_Vungle_ECPM = 0;
-            if(tVungleDateData.IOS.VIEWS >0 ){
-                tLineData.IOS_Vungle_ECPM = parseFloat(((tVungleDateData.IOS.REVENUE/tVungleDateData.IOS.VIEWS)*1000).toFixed(2));
-            }
-            tLineData.IOS_Vungle_Rev = parseFloat((tVungleDateData.IOS.REVENUE).toFixed(2));
-            tLineData.IOS_Vungle_Start = tVungleDateData.IOS.VIEWS;
-            tLineData.IOS_Vungle_View = tVungleDateData.IOS.COMPLETES;
-            if(tVungleDateData.IOS.VIEWS>0){
-                tLineData.IOS_Vungle_Ratio=((tVungleDateData.IOS.COMPLETES/tVungleDateData.IOS.VIEWS)*100).toFixed(2)+"%";
-            }else{
-                tLineData.IOS_Vungle_Ratio="----";
-            }
-
-            let tApplovinDateData = GetDateAdsTypeData("Applovin",tDateData);
-            tLineData.Android_Applovin_ECPM = 0
-            if(tApplovinDateData.Android.VIEWS >0 ){
-                tLineData.Android_Applovin_ECPM =((tApplovinDateData.Android.REVENUE/tApplovinDateData.Android.VIEWS)*1000).toFixed(2);
-            }
-            tLineData.Android_Applovin_Rev = parseFloat((tApplovinDateData.Android.REVENUE).toFixed(2));
-            tLineData.Android_Applovin_View = tApplovinDateData.Android.VIEWS;
-            tLineData.Android_Applovin_Clicked = tApplovinDateData.Android.CLICKED;
-            if(tApplovinDateData.Android.VIEWS>0){
-                tLineData.Android_Applovin_Ratio=((tApplovinDateData.Android.CLICKED/tApplovinDateData.Android.VIEWS)*100).toFixed(2)+"%";
-            }else{
-                tLineData.Android_Applovin_Ratio="----";
-            }
-
-            tLineData.IOS_Applovin_ECPM = 0;
-            if(tApplovinDateData.IOS.VIEWS >0 ){
-                tLineData.IOS_Applovin_ECPM = parseFloat(((tApplovinDateData.IOS.REVENUE/tApplovinDateData.IOS.VIEWS)*1000).toFixed(2));
-            }
-            tLineData.IOS_Applovin_Rev = parseFloat((tApplovinDateData.IOS.REVENUE).toFixed(2));
-            tLineData.IOS_Applovin_View = tApplovinDateData.IOS.VIEWS;
-            tLineData.IOS_Applovin_Clicked = tApplovinDateData.IOS.CLICKED;
-            if(tApplovinDateData.IOS.VIEWS>0){
-                tLineData.IOS_Applovin_Ratio=((tApplovinDateData.IOS.CLICKED/tApplovinDateData.IOS.VIEWS)*100).toFixed(2)+"%";
-            }else{
-                tLineData.IOS_Applovin_Ratio="----";
-            }
-
+           
             let tFacebookDateData = GetDateAdsTypeData("Facebook",tDateData);
             tLineData.Android_Facebook_ECPM = 0
             if(tFacebookDateData.Android.VIEWS >0 ){
@@ -713,33 +593,6 @@ function DoDataFilterAndFillToRevenueGrid(){
                 tLineData.IOS_Facebook_Ratio=((tFacebookDateData.IOS.CLICKED/tFacebookDateData.IOS.VIEWS)*100).toFixed(2)+"%";
             }else{
                 tLineData.IOS_Facebook_Ratio="----";
-            }
-
-            let tMopubDateData = GetDateAdsTypeData("Mopub",tDateData);
-            tLineData.Android_Mopub_ECPM = 0
-            if(tMopubDateData.Android.VIEWS >0 ){
-                tLineData.Android_Mopub_ECPM =((tMopubDateData.Android.REVENUE/tMopubDateData.Android.VIEWS)*1000).toFixed(2);
-            }
-            tLineData.Android_Mopub_Rev = parseFloat((tMopubDateData.Android.REVENUE).toFixed(2));
-            tLineData.Android_Mopub_View = tMopubDateData.Android.VIEWS;
-            tLineData.Android_Mopub_Clicked = tMopubDateData.Android.CLICKED;
-            if(tMopubDateData.Android.VIEWS>0){
-                tLineData.Android_Mopub_Ratio=((tMopubDateData.Android.CLICKED/tMopubDateData.Android.VIEWS)*100).toFixed(2)+"%";
-            }else{
-                tLineData.Android_Mopub_Ratio="----";
-            }
-
-            tLineData.IOS_Mopub_ECPM = 0;
-            if(tMopubDateData.IOS.VIEWS >0 ){
-                tLineData.IOS_Mopub_ECPM = parseFloat(((tMopubDateData.IOS.REVENUE/tMopubDateData.IOS.VIEWS)*1000).toFixed(2));
-            }
-            tLineData.IOS_Mopub_Rev = parseFloat((tMopubDateData.IOS.REVENUE).toFixed(2));
-            tLineData.IOS_Mopub_View = tMopubDateData.IOS.VIEWS;
-            tLineData.IOS_Mopub_Clicked = tMopubDateData.IOS.CLICKED;
-            if(tMopubDateData.IOS.VIEWS>0){
-                tLineData.IOS_Mopub_Ratio=((tMopubDateData.IOS.CLICKED/tMopubDateData.IOS.VIEWS)*100).toFixed(2)+"%";
-            }else{
-                tLineData.IOS_Mopub_Ratio="----";
             }
         }
     }
@@ -1119,34 +972,12 @@ function UpdateShowedNetworkData(){
             ["Interstitial",["Rev","Ecpm","Request","Fill","FillRatio","Views","ViewRatio","Click","ClickRatio"]],
             ["Medium",["Rev","Ecpm","Request","Fill","FillRatio","Views","ViewRatio","Click","ClickRatio"]]
         ]);
-    }else if(sNetSelectedNetwork=="UnityAds"){
-        UpdateShowNetworkData("UnityAds",[
-            ["Reward",["Rev","Ecpm","Views","Finish","FinishRatio"]],
-            ["Interstitial",["Rev","Ecpm","Views","Finish","FinishRatio"]]
-        ]);
-    }else if(sNetSelectedNetwork=="Applovin"){
-        UpdateShowNetworkData("Applovin",[
-            ["Reward",["Rev","Ecpm","Views","Click","ClickRatio"]],
-            ["Interstitial",["Rev","Ecpm","Views","Click","ClickRatio"]]
-        ]);
-    }else if(sNetSelectedNetwork=="Vungle"){
-        UpdateShowNetworkData("Vungle",[
-            ["Reward",["Rev","Ecpm","Views","Click","ClickRatio"]],
-            ["Interstitial",["Rev","Ecpm","Views","Click","ClickRatio"]]
-        ]);
     }else if(sNetSelectedNetwork=="Facebook"){
         UpdateShowNetworkData("Facebook",[
             ["Reward",["Rev","Ecpm","Request","Fill","FillRatio","Views","ViewRatio","Click","ClickRatio"]],
             ["Banner",["Rev","Ecpm","Request","Fill","FillRatio","Views","ViewRatio","Click","ClickRatio"]],
             ["Interstitial",["Rev","Ecpm","Request","Fill","FillRatio","Views","ViewRatio","Click","ClickRatio"]],
             ["Medium",["Rev","Ecpm","Request","Fill","FillRatio","Views","ViewRatio","Click","ClickRatio"]]
-        ]);
-    }else if(sNetSelectedNetwork=="Mopub"){
-        UpdateShowNetworkData("Mopub",[
-            ["Reward",["Rev","Ecpm","Views","Click","ClickRatio"]],
-            ["Banner",["Rev","Ecpm","Views","Click","ClickRatio"]],
-            ["Interstitial",["Rev","Ecpm","Views","Click","ClickRatio"]],
-            ["Medium",["Rev","Ecpm","Views","Click","ClickRatio"]]
         ]);
     }
 }

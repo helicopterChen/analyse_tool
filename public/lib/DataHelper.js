@@ -8,49 +8,15 @@
 
 (function(window) {
     let FB_TOKEN = "EAAcl0ZAnNVHwBAKLteSLhqAdMeBltCJJCxmiFWiVfqnAv7s6CWJzR9IZAjlrz6aNYgYHtabhgmCqOklCtm2WIyoMLQayZCyk5wrZCoDwBFvJE2v8Qau7iLij9fXWGICjSUhKrNBKI2bISVvGXjXG6B2jBXZAXEkPUSicvRWQmmcWWDAoP61fW";
-    let UNITY_PATH ="https://gameads-admin.applifier.com/stats/monetization-api?apikey=f4a37ec7c3ae4247a05c2dd2716d9143279f1807dcbd668a5248cbcd5232ec1b&splitBy=country,zone&fields=adrequests,available,views,revenue,platform&start=2019-03-26T00:00:00.000Z&end=2019-03-27T00:00:00.000Z&scale=day"
-    let VUNGLE_PATH = "https://report.api.vungle.com/ext/pub/reports/performance?dimensions=date,application,country,platform&aggregates=views,completes,clicks,revenue,ecpm&start=2019-03-30&end=2019-03-30";
-    let MOPUB_PATH = "https://app.mopub.com/reports/custom/api/download_report?report_key=4972c84297634f94bbb7cf5d6c0b82f6&api_key=9ShW7_3tl1l2-EWtzHF2lwAEzDU8PqXR&date=2019-03-24"
-    let APPLOVIN_PATH = "https://r.applovin.com/report?api_key=MyQm4xO_Tc-ah_8aFQzVTSE41S26TF6qCWaGR-G_bEaHEktU8r-bIDgJfiP8zWz91XQTWgS6v2O8mFcu5aUNp9&start=2019-04-01&end=2019-04-01&columns=day,platform,country,application,package_name,size,ad_type,impressions,clicks,ecpm,revenue,device_type&format=json"
     let FACEBOOK_PATH = "https://graph.facebook.com/v3.2/2011906995737724/adnetworkanalytics/?metrics=['fb_ad_network_imp','fb_ad_network_filled_request','fb_ad_network_cpm','fb_ad_network_request','fb_ad_network_click','fb_ad_network_revenue']&since=2019-03-26&until=2019-03-26&breakdowns=['platform','country','placement']&access_token="+FB_TOKEN;
     let FACEBOOK_RESULT_QUERY = "https://graph.facebook.com/v3.2/2011906995737724/adnetworkanalytics_results/?query_ids=['"
-    let ADMOB_PATH="http://xxx.cwpro.xyz/details";
+    let ADMOB_PATH="http://127.0.0.1/details";
 
     function unicode2Chr(str) {
         return unescape(str.replace(/\\/g, "%"))
     }
 
     let T_RequestOption={
-        UnityAds:{
-            url:UNITY_PATH,
-            method: 'GET',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept':'application/json'
-            }
-        },
-        Mopub:{
-            url:MOPUB_PATH,
-            method: 'GET'
-        },
-        Vungle:{
-            url:VUNGLE_PATH,
-            method: 'GET', 
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer 9e6d2dda5a13825e59cf3fb02bb02d32',
-                'Vungle-Version':'1',
-                'Accept':'application/json'
-            }
-        },
-        Applovin:{
-            url:APPLOVIN_PATH,
-            method: 'GET',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept':'application/json'
-            }
-        },       
         Facebook:{
             url:FACEBOOK_PATH,
             method: 'POST',
@@ -70,124 +36,6 @@
     }
 
     let T_DataParser={
-        UnityAds:function(sBody){
-            let tRow = sBody.split('\n');
-            let tMap = [];
-            let tHeads = tRow[0].split(',');
-            for(let nIdx in tHeads){
-                tHeads[nIdx]=tHeads[nIdx].replace(/\s/g,'_');
-            }
-            for(let i=1;i<tRow.length;++i){
-                let tRowData = tRow[i].split(',');
-                let tData = {};
-                let tConvertedData = {}
-                for(let j=0;j<tRowData.length;++j){
-                    let sVal = tRowData[j].replace(/^\"|\"$/g,'');
-                    if(tHeads[j]!="Date"){
-                        tData[tHeads[j]]=parseFloat(sVal) || sVal;
-                    }else{
-                        tData[tHeads[j]]= sVal.split(' ')[0];
-                    }
-                }
-                tConvertedData["APP_ID"] = tData["Source_game_id"];
-                tConvertedData["APP_NAME"] = tData["Source_game_name"];
-                tConvertedData["AD_UNIT"] = tData["Source_zone"];
-                tConvertedData["COUNTRY"] = tData["Country_code"];
-                tConvertedData["PLATFORM"] = tData["Platform"];
-                tConvertedData["REVENUE"] = tData["revenue"];
-                tConvertedData["REQUEST"] = tData["adrequests"];
-                tConvertedData["VIEWS"] = tData["views"];
-                tConvertedData["AVALABLE"] = tData["available"];
-                tConvertedData["DATE"] = tData["Date"];
-                tMap.push(tConvertedData);
-            }
-            return tMap
-        },
-        Vungle:function(sBody){
-            let tBody = JSON.parse(sBody);
-            if(!tBody){
-                return;
-            }
-            let tMap = [];
-            for(let tData of tBody){
-                let tConvertedData = {}
-                tConvertedData["APP_ID"] = tData["application id"];
-                tConvertedData["APP_NAME"] = tData["application name"];
-                tConvertedData["COUNTRY"] = tData["country"];
-                tConvertedData["PLATFORM"] = tData["platform"];
-                tConvertedData["REVENUE"] = tData["revenue"];
-                tConvertedData["REQUEST"] = 0;
-                tConvertedData["VIEWS"] = tData["views"];
-                tConvertedData["COMPLETES"] = tData["completes"];
-                tConvertedData["CLICKED"] = tData["clicks"];
-                tConvertedData["ECPM"] = tData["ecpm"];
-                tConvertedData["DATE"] = tData["date"];
-                tMap.push(tConvertedData);
-            }
-            return tMap
-        },
-        Mopub:function(sBody){
-            let tRow = sBody.split('\n');
-            let tMap = [];
-            let tHeads = tRow[0].split(',');
-            for(let i=1;i<tRow.length;++i){
-                let tRowData = tRow[i].split(',');
-                let tData = {};
-                for(let j=0;j<tRowData.length;++j){
-                    tData[tHeads[j]]=tRowData[j];
-                }
-                if(tData["Order"]=="MPX"){
-                    let tConvertedData = {}
-                    tConvertedData["APP_ID"] = tData["App ID"];
-                    tConvertedData["APP_NAME"] = tData["App"];
-                    tConvertedData["AD_UNIT"] = tData["AdUnit Format"];
-                    tConvertedData["COUNTRY"] = tData["Country"];
-                    tConvertedData["PLATFORM"] = "";
-                    if(tData["OS"]=="iPhone OS"){
-                        tConvertedData["PLATFORM"] = "IOS";
-                    }else{
-                        tConvertedData["PLATFORM"] = "Android";
-                    }
-                    tConvertedData["REVENUE"] = tData["Revenue"];
-                    tConvertedData["REQUEST"] = tData["Attempts"];
-                    tConvertedData["VIEWS"] = tData["Impressions"];
-                    tConvertedData["COMPLETES"] = tData["Impressions"];
-                    tConvertedData["CLICKED"] = tData["Clicks"];
-                    tConvertedData["ECPM"] = 0;
-                    if(tData["Impressions"] >0 ){
-                        tConvertedData["ECPM"] = (tData["Revenue"]/tData["Impressions"])*1000;
-                    }
-                    tConvertedData["DATE"] = tData["Day"];
-                    tMap.push(tConvertedData);
-                }
-            }
-            return tMap
-        },
-        Applovin:function(sBody){
-            let tBody = JSON.parse(sBody)
-            if(!tBody || !tBody.results){
-                return;
-            }
-            let tMap = [];
-            for(let tData of tBody.results){
-                let tConvertedData = {}
-                tConvertedData["APP_ID"] = tData["package_name"];
-                tConvertedData["APP_NAME"] = tData["application"];
-                tConvertedData["AD_UNIT"] = tData["ad_type"];
-                tConvertedData["COUNTRY"] = tData["country"].toUpperCase();
-                tConvertedData["PLATFORM"] = tData["platform"];
-                tConvertedData["REVENUE"] = tData["revenue"];
-                tConvertedData["REQUEST"] = tData[""];
-                tConvertedData["VIEWS"] = tData["impressions"];
-                tConvertedData["COMPLETES"] = tData["completes"];
-                tConvertedData["CLICKED"] = tData["clicks"];
-                tConvertedData["ECPM"] = tData["ecpm"];
-                tConvertedData["DATE"] = tData["day"];
-                tMap.push(tConvertedData);
-                
-            }
-            return tMap;
-        },
         Facebook:function(sBody){
             let tBody = JSON.parse(sBody);
             if(!tBody||!tBody.data||!tBody.data[0]||!tBody.data[0].results){
@@ -325,30 +173,6 @@
             };
             xhr.send({});
         });
-    }
-
-    function ProcessVungleData(sBody){
-        let tBody = JSON.parse(sBody);
-        if(!tBody){
-            return;
-        }
-        let tMap = [];
-        for(let tData of tBody){
-            let tConvertedData = {}
-            tConvertedData["APP_ID"] = tData["application id"];
-            tConvertedData["APP_NAME"] = tData["application name"];
-            tConvertedData["COUNTRY"] = tData["country"];
-            tConvertedData["PLATFORM"] = tData["platform"];
-            tConvertedData["REVENUE"] = tData["revenue"];
-            tConvertedData["REQUEST"] = 0;
-            tConvertedData["VIEWS"] = tData["views"];
-            tConvertedData["COMPLETES"] = tData["completes"];
-            tConvertedData["CLICKED"] = tData["clicks"];
-            tConvertedData["ECPM"] = tData["ecpm"];
-            tConvertedData["DATE"] = tData["date"];
-            tMap.push(tConvertedData);
-        }
-        return tMap
     }
 
     async function RequestData(sType,tDate,pCallback){
